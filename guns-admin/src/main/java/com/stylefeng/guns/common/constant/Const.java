@@ -33,4 +33,9 @@ public interface Const {
      */
     String API_MENU_NAME = "接口文档";
 
+    /**
+     * 空值的前端显示
+     */
+    String NULL_VALUE = "--";
+
 }

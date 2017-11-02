@@ -11,6 +11,8 @@ import com.stylefeng.guns.common.persistence.model.Dept;
 import com.stylefeng.guns.core.base.controller.BaseController;
 import com.stylefeng.guns.core.log.LogObjectHolder;
 import com.stylefeng.guns.core.node.ZTreeNode;
+import com.stylefeng.guns.core.shiro.ShiroKit;
+import com.stylefeng.guns.core.shiro.ShiroUser;
 import com.stylefeng.guns.core.util.ToolUtil;
 import com.stylefeng.guns.modular.system.dao.DeptDao;
 import com.stylefeng.guns.modular.system.service.IDeptService;
@@ -73,6 +75,7 @@ public class DeptController extends BaseController {
         model.addAttribute(dept);
         model.addAttribute("pName", ConstantFactory.me().getDeptName(dept.getPid()));
         LogObjectHolder.me().set(dept);
+
         return PREFIX + "dept_edit.html";
     }
 
@@ -82,8 +85,25 @@ public class DeptController extends BaseController {
     @RequestMapping(value = "/tree")
     @ResponseBody
     public List<ZTreeNode> tree() {
-        List<ZTreeNode> tree = this.deptDao.tree();
-        tree.add(ZTreeNode.createParent());
+        Integer deptId = ShiroKit.getUser().getDeptId();
+        List<ZTreeNode> tree = this.deptDao.tree(deptId);
+        //获取本部分信息
+        Dept dept = deptMapper.selectById(deptId);
+
+        ZTreeNode zTreeNode = new ZTreeNode();
+        zTreeNode.setId(deptId);
+        zTreeNode.setName(dept.getSimplename());
+        zTreeNode.setpId(dept.getPid());
+        zTreeNode.setOpen(true);
+        zTreeNode.setChecked(true);
+        zTreeNode.setIsOpen(true);
+
+        tree.add(zTreeNode);
+
+        if(deptId == 0){
+            tree.add(ZTreeNode.createParent());
+        }
+
         return tree;
     }
 

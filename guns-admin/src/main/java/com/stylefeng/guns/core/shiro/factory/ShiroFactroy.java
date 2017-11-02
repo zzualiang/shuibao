@@ -72,6 +72,8 @@ public class ShiroFactroy implements IShiro {
         shiroUser.setRoleList(roleList);
         shiroUser.setRoleNames(roleNameList);
 
+
+
         return shiroUser;
     }
 

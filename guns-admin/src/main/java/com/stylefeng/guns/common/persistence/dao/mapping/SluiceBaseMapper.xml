@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.stylefeng.guns.common.persistence.dao.SluiceBaseMapper">
+
+	<!-- 通用查询映射结果 -->
+	<resultMap id="BaseResultMap" type="com.stylefeng.guns.common.persistence.model.Irrb.SluiceBase">
+		<id column="sluice_id" property="sluiceId" />
+		<result column="sluice_code" property="sluiceCode" />
+		<result column="sluice_name" property="sluiceName" />
+		<result column="sluice_full_name" property="sluiceFullName" />
+		<result column="sluice_alias_name" property="sluiceAliasName" />
+		<result column="sluice_type" property="sluiceType" />
+		<result column="canal_id" property="canalId" />
+		<result column="sluice_flow" property="sluiceFlow" />
+		<result column="strobe_number" property="strobeNumber" />
+		<result column="strobe_type" property="strobeType" />
+		<result column="strobe_height" property="strobeHeight" />
+		<result column="strobe_width" property="strobeWidth" />
+		<result column="strobe_thickness" property="strobeThickness" />
+		<result column="motivity_type" property="motivityType" />
+		<result column="motivity_power" property="motivityPower" />
+		<result column="motivity_velocity" property="motivityVelocity" />
+		<result column="dissipation_type" property="dissipationType" />
+		<result column="dissipation_length" property="dissipationLength" />
+		<result column="dissipation_slope_upper_limit" property="dissipationSlopeUpperLimit" />
+		<result column="dissipation_slope_lower_limit" property="dissipationSlopeLowerLimit" />
+		<result column="construction_time_upper_limit" property="constructionTimeUpperLimit" />
+		<result column="construction_time_lower_limit" property="constructionTimeLowerLimit" />
+		<result column="stake" property="stake" />
+	</resultMap>
+
+</mapper>

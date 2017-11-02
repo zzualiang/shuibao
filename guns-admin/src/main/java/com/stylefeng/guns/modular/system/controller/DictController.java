@@ -103,6 +103,7 @@ public class DictController extends BaseController {
     @ResponseBody
     public Object list(String condition) {
         List<Map<String, Object>> list = this.dictDao.list(condition);
+        System.out.println(this.dictService.findDictById(16));
         return super.warpObject(new DictWarpper(list));
     }
 

@@ -23,6 +23,7 @@ public class EhCacheConfig {
      */
     @Bean
     public EhCacheCacheManager cacheManager(CacheManager cacheManager) {
+        System.out.println("CacheConfiguration.ehCacheCacheManager()");
         return new EhCacheCacheManager(cacheManager);
     }
 
@@ -31,6 +32,7 @@ public class EhCacheConfig {
      */
     @Bean
     public EhCacheManagerFactoryBean ehcache() {
+        System.out.println("CacheConfiguration.ehCacheManagerFactoryBean()");
         EhCacheManagerFactoryBean ehCacheManagerFactoryBean = new EhCacheManagerFactoryBean();
         ehCacheManagerFactoryBean.setConfigLocation(new ClassPathResource("ehcache.xml"));
         return ehCacheManagerFactoryBean;

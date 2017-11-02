@@ -17,7 +17,7 @@ import java.util.Map;
  * @Date 2017年3月4日23:05:54
  */
 @Controller
-@RequestMapping("/blackboard")
+
 public class BlackboardController extends BaseController {
 
     @Autowired
@@ -26,10 +26,19 @@ public class BlackboardController extends BaseController {
     /**
      * 跳转到黑板
      */
-    @RequestMapping("")
+    @RequestMapping("/blackboard")
     public String blackboard(Model model) {
         List<Map<String, Object>> notices = noticeDao.list(null);
         model.addAttribute("noticeList",notices);
         return "/blackboard.html";
+    }
+
+    /**
+     * 跳转到地图展示
+     */
+    @RequestMapping("/map")
+    public String map() {
+
+        return "/map.html";
     }
 }

@@ -89,6 +89,9 @@
                     } else {
                         td.text(item[column.field]);
                     }
+                    if(column.visible == false){
+                        td[0].hidden = true;
+					}
 					tr.append(td);
 				}
 			});
@@ -105,11 +108,18 @@
 				if(i==0&&item.field=='selectItem'){
 					hasSelectItem = true;
 					th = $('<th style="width:36px"></th>');
+                    th.text(item.title);
+                    thr.append(th);
 				}else{
-					th = $('<th style="padding:10px;'+((item.width)?('width:'+item.width):'')+'"></th>');
+                    if(item.visible == true || item.visible == undefined){
+                        th = $('<th style="padding:10px;'+((item.width)?('width:'+item.width):'')+'"></th>');
+                        th.text(item.title);
+                        thr.append(th);
+                    }
+
 				}
-				th.text(item.title);
-				thr.append(th);
+
+
 			});
 			var thead = $('<thead class="treegrid-thead"></thead>');
 			thead.append(thr);

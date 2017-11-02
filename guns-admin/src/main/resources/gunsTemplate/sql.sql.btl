@@ -1,0 +1,10 @@
+-- 菜单SQL
+INSERT INTO `guns`.`menu` ( `code`, `pcode`, `pcodes`, `name`, `icon`, `url`, `num`, `levels`, `ismenu`, `tips`, `status`, `isopen`)
+    VALUES ( '${context.bizEnName}', '${context.sqlName}', '[0],[${context.sqlName}],', '${context.bizChName}', '', '/${context.bizEnName}', '2', '2', '1', NULL, '1', NULL);
+
+INSERT INTO `guns`.`menu` ( `code`, `pcode`, `pcodes`, `name`, `icon`, `url`, `num`, `levels`, `ismenu`, `tips`, `status`, `isopen`)
+    VALUES ( '${context.bizEnName}_add', '${context.bizEnName}', '[0],[${context.sqlName}],[${context.bizEnName}],', '添加${context.bizChName}', '', '/${context.bizEnName}/add', '1', '3', '0', NULL, '1', NULL);
+INSERT INTO `guns`.`menu` ( `code`, `pcode`, `pcodes`, `name`, `icon`, `url`, `num`, `levels`, `ismenu`, `tips`, `status`, `isopen`)
+    VALUES ( '${context.bizEnName}_delete', '${context.bizEnName}', '[0],[${context.sqlName}],[${context.bizEnName}],', '删除${context.bizChName}', '', '/${context.bizEnName}/delete', '2', '3', '0', NULL, '1', NULL);
+INSERT INTO `guns`.`menu` ( `code`, `pcode`, `pcodes`, `name`, `icon`, `url`, `num`, `levels`, `ismenu`, `tips`, `status`, `isopen`)
+    VALUES ( '${context.bizEnName}_update', '${context.bizEnName}', '[0],[${context.sqlName}],[${context.bizEnName}],', '修改${context.bizChName}', '', '/${context.bizEnName}/update', '3', '3', '0', NULL, '1', NULL);

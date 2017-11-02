@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.stylefeng.guns.modular.irrb.dao.IrrBaseDao">
+
+	<!-- 可根据自己的需求，是否要使用 -->
+    <resultMap type="map" id="BaseResultMap">
+        <result property="irrId" column="irr_id"/>
+        <result property="irrCode" column="irr_code"/>
+        <result property="sourceId" column="source_id"/>
+        <result property="irrName" column="irr_name"/>
+        <result property="irrType" column="irr_type"/>
+        <result property="upperManageunit" column="upper_manageunit"/>
+        <result property="designIrrigateArea" column="design_irrigate_area"/>
+        <result property="cheadSite" column="chead_site"/>
+        <result property="cheadFlux" column="chead_flux"/>
+        <result property="trunkLegth" column="trunk_legth"/>
+        <result property="irrigationArea" column="irrigation_area"/>
+        <result property="created" column="created"/>
+        <result property="modified" column="modified"/>
+    </resultMap>
+
+    <select id="list" resultMap="BaseResultMap">
+        select * from irr_base where 1 = 1
+        <if test="condition != null and condition != ''">
+            and irr_code like CONCAT('%',#{condition},'%') or irr_name like CONCAT('%',#{condition},'%')
+        </if>
+        <if test="irrType != null and irrType !=''">
+            and irr_type = #{irrType}
+        </if>
+
+    </select>
+
+</mapper>

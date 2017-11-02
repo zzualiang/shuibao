@@ -2,12 +2,14 @@ package com.stylefeng.guns.modular.system.service.impl;
 
 import com.baomidou.mybatisplus.mapper.EntityWrapper;
 import com.baomidou.mybatisplus.mapper.Wrapper;
+import com.stylefeng.guns.common.constant.cache.Cache;
 import com.stylefeng.guns.common.exception.BizExceptionEnum;
 import com.stylefeng.guns.common.exception.BussinessException;
 import com.stylefeng.guns.modular.system.dao.DictDao;
 import com.stylefeng.guns.modular.system.service.IDictService;
 import com.stylefeng.guns.common.persistence.dao.DictMapper;
 import com.stylefeng.guns.common.persistence.model.Dict;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -79,5 +81,14 @@ public class DictServiceImpl implements IDictService {
 
         //删除这个词典
         dictMapper.deleteById(dictId);
+    }
+
+
+    @Override
+    @Cacheable(value= Cache.CONSTANT,key="'demo_'+#dictId")
+    public Dict findDictById(Integer dictId) {
+        System.out.println("不进入混村");
+        Dict dict = dictMapper.selectById(dictId);
+        return dict;
     }
 }

@@ -56,6 +56,24 @@ public interface IConstantFactory {
     String getDeptName(Integer deptId);
 
     /**
+     * 获取水源名称
+     */
+    @Cacheable(value = Cache.CONSTANT, key = "'" + CacheKey.SOURCE_NAME + "'+#sourceId")
+    String getSourceName(Integer sourceId);
+
+    /**
+     * 获取灌区名称
+     */
+    @Cacheable(value = Cache.CONSTANT, key = "'" + CacheKey.IRR_NAME + "'+#irrId")
+    String getIrrName(Integer irrId);
+
+    /**
+     * 获取渠道名称
+     */
+    @Cacheable(value = Cache.CONSTANT, key = "'" + CacheKey.CANAL_NAME + "'+#canalId")
+    String getCanalName(Integer canalId);
+
+    /**
      * 获取菜单的名称们(多个)
      */
     String getMenuNames(String menuIds);
@@ -119,5 +137,37 @@ public interface IConstantFactory {
      * 获取所有父部门id
      */
     List<Integer> getParentDeptIds(Integer deptid);
+
+
+    /**
+     * 获取灌区类型名称
+     */
+    String getIrrTypeName(Integer irrType);
+
+    /**
+     * 获取水源类型名称
+     */
+    String getSourceTypeSName(Integer sourceTypeS);
+
+    /**
+     * 获取水源工程类型名称
+     */
+    String getSourceTypeBName(Integer sourceTypeB);
+
+    /**
+     * 获取渠道类型名称
+     *
+     */
+    String getCanalTypeName(Integer canalType);
+
+    /**
+     * 获取水闸类型名称
+     */
+    String getSluiceTypeName(Integer sluiceType);
+
+    /**
+     * 获取闸类型名称
+     */
+    String getStrobeTypeName(Integer strobeType);
 
 }

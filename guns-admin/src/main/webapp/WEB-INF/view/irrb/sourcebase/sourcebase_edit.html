@@ -1,0 +1,41 @@
+@layout("/common/_container.html"){
+<div class="ibox float-e-margins">
+    <div class="ibox-content">
+        <div class="form-horizontal" id="sourceBaseForm">
+            <input type="hidden" id="sourceId" value="${sourceBase.sourceId}">
+            <input type="hidden" id="sourceTypeBValue" value="${sourceBase.sourceTypeB}">
+            <input type="hidden" id="sourceTypeSValue" value="${sourceBase.sourceTypeS}">
+            <div class="row">
+                <div class="col-sm-6 b-r">
+                    <#input id="sourceCode" name="水源编码" underline="true" value="${sourceBase.sourceCode}"/>
+                    <#select id="sourceTypeB" name="水源工程类型" underline="true">
+                        <option value="1">水库</option>
+                        <option value="2">河流</option>
+                        <option value="3">井</option>
+                        <option value="9">其他</option>
+                    </#select>
+                </div>
+
+                <div class="col-sm-6">
+                    <#input id="sourceName" name="水源名称" underline="true" value="${sourceBase.sourceName}"/>
+                    <#select id="sourceTypeS" name="水源类型" underline="true">
+                        <option value="1">地表水</option>
+                        <option value="2">地下水</option>
+                        <option value="9">其他</option>
+                    </#select>
+                </div>
+            </div>
+
+
+            <div class="row btn-group-m-t">
+                <div class="col-sm-10">
+                    <#button btnCss="info" name="提交" id="ensure" icon="fa-check" clickFun="SourceBaseInfoDlg.editSubmit()"/>
+                    <#button btnCss="danger" name="取消" id="cancel" icon="fa-eraser" clickFun="SourceBaseInfoDlg.close()"/>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</div>
+<script src="${ctxPath}/static/modular/irrb/sourceBase/sourceBase_info.js"></script>
+@}

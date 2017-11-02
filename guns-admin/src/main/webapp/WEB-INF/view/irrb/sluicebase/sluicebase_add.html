@@ -1,0 +1,71 @@
+@layout("/common/_container.html"){
+<div class="ibox float-e-margins">
+    <div class="ibox-content">
+        <div class="form-horizontal" id="sluiceBaseForm">
+            <input type="hidden" id="sluiceId" value="">
+            <div class="row">
+                <div class="col-sm-6 b-r">
+                    <#input id="sluiceCode" name="水闸编码" underline="true"/>
+                    <#input id="sluiceFullName" name="工程全称" underline="true"/>
+
+                    <#select id="sluiceType" name="水闸类别" underline="true">
+                        <option value="1">引水闸</option>
+                        <option value="2">分水闸</option>
+                        <option value="3">泄水闸</option>
+                        <option value="4">节制闸</option>
+                        <option value="5">冲沙闸</option>
+                        <option value="6">退水闸</option>
+                        <option value="9">其他</option>
+                    </#select>
+                    <#input id="sluiceFlow" name="流量(m^3/s)" underline="true"/>
+
+                    <#select id="strobeType" name="闸门型式" underline="true">
+                        <option value="1">钢平板</option>
+
+                        <option value="9">其他</option>
+                    </#select>
+                    <#input id="strobeWidth" name="闸门宽度" underline="true"/>
+                    <#input id="motivityType" name="启闭机样式" underline="true"/>
+                    <#input id="motivityVelocity" name="启闭速度" underline="true"/>
+                    <#input id="dissipationLength" name="退水渠长(m)" underline="true"/>
+                    <#input id="dissipationSlopeLowerLimit" name="坡降(下限)" underline="true"/>
+                    <#input id="constructionTimeLowerLimit" name="施工时间(天)下限" underline="true"/>
+                </div>
+
+                <div class="col-sm-6">
+                    <#input id="sluiceName" name="工程简称" underline="true"/>
+                    <#input id="sluiceAliasName" name="工程别名" underline="true"/>
+
+                    <#input id="canal" name="所属渠段" underline="true" readonly="readonly" hidden="canalId"
+                            clickFun="SluiceBaseInfoDlg.showCanalSelectTree(); return false;"
+                            style="background-color: #ffffff !important;"/>
+
+                    <#input id="strobeNumber" name="闸门孔数" underline="true"/>
+                    <#input id="strobeHeight" name="闸门高度" underline="true"/>
+                    <#input id="strobeThickness" name="闸门厚度" underline="true"/>
+                    <#input id="motivityPower" name="启闭机动力" underline="true"/>
+                    <#input id="dissipationType" name="消能工型式" underline="true"/>
+                    <#input id="dissipationSlopeUpperLimit" name="坡降(上限)" underline="true"/>
+                    <#input id="constructionTimeUpperLimit" name="施工时间(天)上限" underline="true"/>
+                    <#input id="stake" name="桩号" underline="true"/>
+                </div>
+            </div>
+
+            <!-- 这是渠道选择的下拉框 -->
+            <div id="menuContent" class="menuContent"
+                 style="display: none; position: absolute; z-index: 200;">
+                <ul id="treeDemo" class="ztree tree-box" style="width: 249px !important;"></ul>
+            </div>
+
+            <div class="row btn-group-m-t">
+                <div class="col-sm-10">
+                    <#button btnCss="info" name="提交" id="ensure" icon="fa-check" clickFun="SluiceBaseInfoDlg.addSubmit()"/>
+                    <#button btnCss="danger" name="取消" id="cancel" icon="fa-eraser" clickFun="SluiceBaseInfoDlg.close()"/>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</div>
+<script src="${ctxPath}/static/modular/irrb/sluiceBase/sluiceBase_info.js"></script>
+@}

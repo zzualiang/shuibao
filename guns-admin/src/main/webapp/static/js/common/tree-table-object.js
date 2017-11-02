@@ -8,7 +8,7 @@
         this.btInstance = null;					//jquery和bootstrapTreeTable绑定的对象
         this.bstableId = bstableId;
         this.url = Feng.ctxPath + url;
-        this.method = "post";
+        this.method = "get";
         this.columns = columns;
         this.data = {};// ajax的参数
         this.expandColumn = null;// 展开显示的列 

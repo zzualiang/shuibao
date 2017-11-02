@@ -10,11 +10,12 @@ import com.stylefeng.guns.core.util.ToolUtil;
  */
 public class ContextConfig {
 
-    private String projectPath = "D:\\ideaSpace\\guns";//模板输出的项目目录
+    private String projectPath = "G:\\IdeaProjects\\guns";//模板输出的项目目录
     private String bizChName;   //业务名称
     private String bizEnName;   //业务英文名称
     private String bizEnBigName;//业务英文名称(大写)
-    private String moduleName = "system";  //模块名称
+    private String moduleName = "system";  //应用名称
+    private String sqlName = "system";  //模块名称
 
     private Boolean controllerSwitch = true;    //是否生成控制器代码开关
     private Boolean indexPageSwitch = true;     //主页
@@ -24,6 +25,10 @@ public class ContextConfig {
     private Boolean infoJsSwitch = true;        //详情页面js
     private Boolean daoSwitch = true;           //dao
     private Boolean serviceSwitch = true;       //service
+
+
+
+    private Boolean sqlSwitch = true;       //sql
 
     public String getBizEnBigName() {
         return bizEnBigName;
@@ -129,4 +134,21 @@ public class ContextConfig {
     public void setServiceSwitch(Boolean serviceSwitch) {
         this.serviceSwitch = serviceSwitch;
     }
+
+    public Boolean getSqlSwitch() {
+        return sqlSwitch;
+    }
+
+    public void setSqlSwitch(Boolean sqlSwitch) {
+        this.sqlSwitch = sqlSwitch;
+    }
+
+    public String getSqlName() {
+        return sqlName;
+    }
+
+    public void setSqlName(String sqlName) {
+        this.sqlName = sqlName;
+    }
+
 }

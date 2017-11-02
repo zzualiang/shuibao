@@ -1,0 +1,41 @@
+@layout("/common/_container.html"){
+<div class="ibox float-e-margins">
+    <div class="ibox-content">
+        <div class="form-horizontal" id="irrBaseForm">
+            <input type="hidden" id="irrId" value="">
+            <div class="row">
+                <div class="col-sm-6 b-r">
+                    <#input id="irrCode" name="灌区编码" underline="true"/>
+                    <#input id="irrName" name="灌区名称" underline="true"/>
+                    <#input id="upperManageunit" name="上级管理单位" underline="true"/>
+                    <#input id="cheadSite" name="渠首取水位置" underline="true"/>
+                    <#input id="trunkLegth" name="总干渠长度" underline="true"/>
+                </div>
+
+                <div class="col-sm-6">
+
+                    <#select id="sourceId" name="水源编码" underline="true"></#select>
+                    <#select id="irrType" name="灌区类型" underline="true">
+                        <option value="1">大型灌区</option>
+                        <option value="2">中型灌区</option>
+                        <option value="3">小型灌区</option>
+                        <option value="9">其他</option>
+                    </#select>
+                    <#input id="designIrrigateArea" name="设计灌溉面积" underline="true"/>
+                    <#input id="cheadFlux" name="渠首设计流量" underline="true"/>
+                    <#input id="irrigationArea" name="灌溉范围" underline="true"/>
+                </div>
+            </div>
+
+            <div class="row btn-group-m-t">
+                <div class="col-sm-10">
+                    <#button btnCss="info" name="提交" id="ensure" icon="fa-check" clickFun="IrrBaseInfoDlg.addSubmit()"/>
+                    <#button btnCss="danger" name="取消" id="cancel" icon="fa-eraser" clickFun="IrrBaseInfoDlg.close()"/>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</div>
+<script src="${ctxPath}/static/modular/irrb/irrBase/irrBase_info.js"></script>
+@}

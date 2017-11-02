@@ -1,0 +1,44 @@
+@layout("/common/_container.html"){
+<div class="ibox float-e-margins">
+    <div class="ibox-title">
+        <h5>基本信息</h5>
+    </div>
+    <div class="ibox-content">
+        <div class="form-horizontal" id="canalBaseForm">
+            <input type="hidden" id="canalId" value="">
+            <div class="row">
+                <div class="col-sm-4 b-r">
+                    <#input id="canalCode" name="渠道编码" underline="true" readonly = "readonly" value="${canalBase.canalCode}"/>
+                    <#input id="canalTypeName" name="渠道类型" underline="true" readonly = "readonly" value="${canalBase.canalTypeName}"/>
+                    <#input id="canalPlanArea" name="规划供水面积（万亩）" underline="true" readonly = "readonly" value="${canalBase.canalPlanArea}"/>
+                </div>
+                <div class="col-sm-4 b-r">
+                    <#input id="canalName" name="渠道名称" underline="true" readonly = "readonly" value="${canalBase.canalName}"/>
+                    <#input id="canalLength" name="渠道长度（公里）" underline="true" readonly = "readonly" value="${canalBase.canalLength}"/>
+                    <#input id="upperCanalName" name="上级渠道" underline="true" readonly = "readonly" value="${canalBase.upperCanalName}"/>
+                </div>
+                <div class="col-sm-4">
+                    <#input id="irrName" name="所属灌区" underline="true" readonly = "readonly" value="${canalBase.irrName}"/>
+                    <#input id="canalControlArea" name="控制面积（万亩）" underline="true" readonly = "readonly" value="${canalBase.canalControlArea}"/>
+                    <#input id="upperCanalStake" name="上级渠道桩号" underline="true" readonly = "readonly" value="${canalBase.upperCanalStake}"/>
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+</div>
+<div class="ibox float-e-margins">
+    <div class="ibox-title">
+        <h5>地图显示</h5>
+    </div>
+    <div class="ibox-content ibox-map-content">
+        <div id="map" style="height: 400px"></div>
+        <#BaseMapsCon id="basemap" basemap="Streets" ></#BaseMapsCon>
+
+
+    </div>
+</div>
+<script src="${ctxPath}/static/modular/irrb/canalBase/canalBase_info.js"></script>
+@}

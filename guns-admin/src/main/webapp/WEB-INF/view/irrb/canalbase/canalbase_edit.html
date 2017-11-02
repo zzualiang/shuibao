@@ -1,0 +1,54 @@
+@layout("/common/_container.html"){
+<div class="ibox float-e-margins">
+    <div class="ibox-content">
+        <div class="form-horizontal" id="canalBaseForm">
+            <input type="hidden" id="canalId" value="${canalBase.canalId}">
+            <input type="hidden" id="irrIdValue" value="${canalBase.irrId}">
+            <input type="hidden" id="canalTypeValue" value="${canalBase.canalType}">
+            <div class="row">
+                <div class="col-sm-6 b-r">
+                    <#input id="canalCode" name="渠道编码" underline="true" value="${canalBase.canalCode}"/>
+                    <#input id="canalName" name="渠道名称" underline="true" value="${canalBase.canalName}"/>
+                    <#input id="canalLength" name="渠道长度（公里）" underline="true" value="${canalBase.canalLength}"/>
+                    <#input id="canalPlanArea" name="规划供水面积（万亩）" underline="true" value="${canalBase.canalPlanArea}"/>
+                    <#input id="upperCanalStake" name="上级渠道桩号" underline="true" value="${canalBase.upperCanalStake}"/>
+                </div>
+
+                <div class="col-sm-6">
+                    <#select id="irrId" name="所属灌区" underline="true"></#select>
+
+                    <#select id="canalType" name="渠道类型" underline="true">
+                        <option value="1">主干渠</option>
+                        <option value="2">干渠</option>
+                        <option value="3">支渠</option>
+                        <option value="4">斗渠</option>
+                        <option value="5">农渠</option>
+                        <option value="9">其他</option>
+                    </#select>
+                    <#input id="canalControlArea" name="控制面积（万亩）" underline="true" value="${canalBase.canalControlArea}"/>
+                    <!--<#input id="upperCanalId" name="上级渠道标识符" underline="true" value="${canalBase.upperCanalId}"/>-->
+                    <#input id="upperCanal" name="上级渠道" underline="true" readonly="readonly" hidden="upperCanalId" hiddenValue="${canalBase.upperCanalId}" value="${upperCanalName}"
+                            clickFun="CanalBaseInfoDlg.showUperCanalSelectTree(); return false;"
+                            style="background-color: #ffffff !important;"/>
+                </div>
+
+            </div>
+            <!-- 这是上级渠道选择的下拉框 -->
+            <div id="menuContent" class="menuContent"
+                 style="display: none; position: absolute; z-index: 200;">
+                <ul id="treeDemo" class="ztree tree-box" style="width: 249px !important;"></ul>
+            </div>
+
+
+            <div class="row btn-group-m-t">
+                <div class="col-sm-10">
+                    <#button btnCss="info" name="提交" id="ensure" icon="fa-check" clickFun="CanalBaseInfoDlg.editSubmit()"/>
+                    <#button btnCss="danger" name="取消" id="cancel" icon="fa-eraser" clickFun="CanalBaseInfoDlg.close()"/>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</div>
+<script src="${ctxPath}/static/modular/irrb/canalBase/canalBase_info.js"></script>
+@}

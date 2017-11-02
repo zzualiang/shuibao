@@ -9,6 +9,7 @@ import com.stylefeng.guns.core.template.config.ContextConfig;
 import com.stylefeng.guns.core.template.engine.SimpleTemplateEngine;
 import com.stylefeng.guns.core.template.engine.base.GunsTemplateEngine;
 import com.stylefeng.guns.core.util.ToolUtil;
+import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
 import org.springframework.stereotype.Controller;
@@ -23,6 +24,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
  * @author fengshuonan
  * @Date 2017-05-23 18:52:34
  */
+@Api(value = "生成代码",tags = "代码生成API接口")
 @Controller
 @RequestMapping("/code")
 public class CodeController extends BaseController {

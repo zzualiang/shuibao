@@ -84,4 +84,12 @@ public class SimpleTemplateEngine extends GunsTemplateEngine {
         generateFile("gunsTemplate/ServiceImpl.java.btl", serviceImplPath);
         System.out.println("生成ServiceImpl成功!");
     }
+
+    @Override
+    protected void generateSql() {
+        String path = ToolUtil.format(super.getContextConfig().getProjectPath() + getSqlConfig().getSqlPathTemplate(),
+                super.getContextConfig().getBizEnName(),super.getContextConfig().getBizEnName());
+        generateFile("gunsTemplate/sql.sql.btl", path);
+        System.out.println("生成sql成功!");
+    }
 }

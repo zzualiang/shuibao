@@ -255,7 +255,9 @@ $(function () {
     instance = ztree;
 
     //初始化性别选项
-    $("#sex").val($("#sexValue").val());
+    if($("#sexValue").val()!=undefined){
+        $("#sex").val($("#sexValue").val());
+    }
 
     // 初始化头像上传
     var avatarUp = new $WebUpload("avatar");

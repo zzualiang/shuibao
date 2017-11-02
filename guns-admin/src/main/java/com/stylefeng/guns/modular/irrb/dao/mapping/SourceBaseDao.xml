@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.stylefeng.guns.modular.irrb.dao.SourceBaseDao">
+
+	<!-- 可根据自己的需求，是否要使用 -->
+    <resultMap type="map" id="BaseResultMap">
+        <result property="sourceId" column="source_id"/>
+        <result property="sourceCode" column="source_code"/>
+        <result property="sourceName" column="source_name"/>
+        <result property="sourceTypeB" column="source_type_b"/>
+        <result property="sourceTypeS" column="Source_type_s"/>
+        <result property="created" column="created"/>
+        <result property="modified" column="modified"/>
+    </resultMap>
+
+    <select id="list" resultMap="BaseResultMap">
+        select * from source_base where 1=1
+        <if test="condition != null and condition != ''">
+            and source_code like CONCAT('%',#{condition},'%') or source_name like CONCAT('%',#{condition},'%')
+        </if>
+        <if test="sourceTypeS != null and sourceTypeS !=''">
+            and source_type_s = #{sourceTypeS}
+        </if>
+        <if test="sourceTypeB != null and sourceTypeB !=''">
+            and source_type_b = #{sourceTypeB}
+        </if>
+
+    </select>
+
+</mapper>

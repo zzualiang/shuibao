@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.stylefeng.guns.modular.irrb.dao.SluiceBaseDao">
+
+	<!-- 可根据自己的需求，是否要使用 -->
+    <resultMap type="map" id="BaseResultMap">
+        <result property="sluiceId" column="sluice_id"/>
+        <result property="sluiceCode" column="sluice_code"/>
+        <result property="sluiceName" column="sluice_name"/>
+        <result property="sluiceFullName" column="sluice_full_name"/>
+        <result property="sluiceAliasName" column="sluice_alias_name"/>
+        <result property="sluiceType" column="sluice_type"/>
+        <result property="canalId" column="canal_id"/>
+        <result property="sluiceFlow" column="sluice_flow"/>
+        <result property="strobeNumber" column="strobe_number"/>
+        <result property="strobeType" column="strobe_type"/>
+        <result property="strobeHeight" column="strobe_height"/>
+        <result property="strobeWidth" column="strobe_width"/>
+        <result property="strobeThickness" column="strobe_thickness"/>
+        <result property="motivityType" column="motivity_type"/>
+        <result property="motivityPower" column="motivity_power"/>
+        <result property="motivityVelocity" column="motivity_velocity"/>
+        <result property="dissipationType" column="dissipation_type"/>
+        <result property="dissipationLength" column="dissipation_length"/>
+        <result property="dissipationSlopeUpperLimit" column="dissipation_slope_upper_limit"/>
+        <result property="dissipationSlopeLowerLimit" column="dissipation_slope_lower_limit"/>
+        <result property="constructionTimeUpperLimit" column="construction_time_upper_limit"/>
+        <result property="constructionTimeLowerLimit" column="construction_time_lower_limit"/>
+        <result property="stake" column="stake"/>
+    </resultMap>
+
+    <select id="list" resultMap="BaseResultMap">
+        select * from sluice_base
+        <if test="condition != null and condition != ''">
+            where code like CONCAT('%',#{condition},'%') or name like CONCAT('%',#{condition},'%')
+        </if>
+
+    </select>
+
+</mapper>

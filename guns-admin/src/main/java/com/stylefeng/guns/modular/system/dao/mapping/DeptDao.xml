@@ -12,6 +12,9 @@
 			'false'
 		END
 		) as isOpen from dept
+		<if test="deptId != null and deptId != ''">
+			where pids like CONCAT('%',#{deptId},'%')
+		</if>
 	</select>
 
 	<select id="list" resultType="map">

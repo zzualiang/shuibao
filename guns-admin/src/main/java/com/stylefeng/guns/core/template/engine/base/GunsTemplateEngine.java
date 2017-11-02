@@ -100,6 +100,9 @@ public abstract class GunsTemplateEngine extends AbstractTemplateEngine {
         if(super.contextConfig.getServiceSwitch()){
             generateService();
         }
+        if(super.contextConfig.getSqlSwitch()){
+            generateSql();
+        }
 
     }
 
@@ -118,5 +121,7 @@ public abstract class GunsTemplateEngine extends AbstractTemplateEngine {
     protected abstract void generateDao();
 
     protected abstract void generateService();
+
+    protected abstract void generateSql();
 
 }

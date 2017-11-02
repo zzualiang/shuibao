@@ -2,10 +2,15 @@ package com.stylefeng.guns.common.constant.factory;
 
 import com.baomidou.mybatisplus.mapper.EntityWrapper;
 import com.baomidou.mybatisplus.mapper.Wrapper;
+import com.stylefeng.guns.common.constant.state.IrrB.*;
 import com.stylefeng.guns.common.constant.state.ManagerStatus;
 import com.stylefeng.guns.common.constant.state.MenuStatus;
 import com.stylefeng.guns.common.persistence.dao.*;
 import com.stylefeng.guns.common.persistence.model.*;
+import com.stylefeng.guns.common.persistence.model.Irrb.CanalBase;
+import com.stylefeng.guns.common.persistence.model.Irrb.IrrBase;
+import com.stylefeng.guns.common.persistence.model.Irrb.SluiceBase;
+import com.stylefeng.guns.common.persistence.model.Irrb.SourceBase;
 import com.stylefeng.guns.core.log.LogObjectHolder;
 import com.stylefeng.guns.core.support.StrKit;
 import com.stylefeng.guns.core.util.Convert;
@@ -26,13 +31,22 @@ import java.util.List;
 @Component
 @DependsOn("springContextHolder")
 public class ConstantFactory implements IConstantFactory {
-
+    //system业务
     private RoleMapper roleMapper = SpringContextHolder.getBean(RoleMapper.class);
     private DeptMapper deptMapper = SpringContextHolder.getBean(DeptMapper.class);
     private DictMapper dictMapper = SpringContextHolder.getBean(DictMapper.class);
     private UserMapper userMapper = SpringContextHolder.getBean(UserMapper.class);
     private MenuMapper menuMapper = SpringContextHolder.getBean(MenuMapper.class);
     private NoticeMapper noticeMapper = SpringContextHolder.getBean(NoticeMapper.class);
+
+
+    //水源信息管理模块
+    private SourceBaseMapper sourceBaseMapper = SpringContextHolder.getBean(SourceBaseMapper.class);
+
+    private IrrBaseMapper irrBaseMapper = SpringContextHolder.getBean(IrrBaseMapper.class);
+
+    private CanalBaseMapper canalBaseMapper = SpringContextHolder.getBean(CanalBaseMapper.class);
+
 
     public static IConstantFactory me() {
         return SpringContextHolder.getBean("constantFactory");
@@ -126,6 +140,42 @@ public class ConstantFactory implements IConstantFactory {
             return dept.getFullname();
         }
         return "";
+    }
+
+    /**
+     * 根据水源编码获取水源名称
+     * @param sourceId
+     * @return
+     */
+    @Override
+    public String getSourceName(Integer sourceId) {
+        SourceBase sourceBase = sourceBaseMapper.selectById(sourceId);
+        return sourceBase.getSourceName();
+    }
+
+    /**
+     * 获取灌区名称
+     *
+     * @param irrId
+     */
+    @Override
+    public String getIrrName(Integer irrId) {
+        IrrBase irrBase = irrBaseMapper.selectById(irrId);
+        return irrBase.getIrrName();
+    }
+
+    /**
+     * 获取渠道名称
+     *
+     * @param canalId
+     */
+    @Override
+    public String getCanalName(Integer canalId) {
+        CanalBase canalBase = canalBaseMapper.selectById(canalId);
+        if (ToolUtil.isNotEmpty(canalBase) && ToolUtil.isNotEmpty(canalBase.getCanalName())) {
+            return canalBase.getCanalName();
+        }
+        return "顶级渠道";
     }
 
     /**
@@ -320,6 +370,54 @@ public class ConstantFactory implements IConstantFactory {
             parentDeptIds.add(Integer.valueOf(StrKit.removeSuffix(StrKit.removePrefix(s, "["), "]")));
         }
         return parentDeptIds;
+    }
+
+    /**
+     * 获取灌区名称
+     */
+    @Override
+    public String getIrrTypeName(Integer irrType) {
+        return IrrType.valueOf(irrType);
+    }
+
+    @Override
+    public String getSourceTypeSName(Integer sourceTypeS) {
+        return SourceTypeS.valueOf(sourceTypeS);
+    }
+
+    @Override
+    public String getSourceTypeBName(Integer sourceTypeB) {
+        return SourceTypeB.valueOf(sourceTypeB);
+    }
+
+    /**
+     * 获取渠道类型名称
+     *
+     * @param canalType
+     */
+    @Override
+    public String getCanalTypeName(Integer canalType) {
+        return CanalType.valueOf(canalType);
+    }
+
+    /**
+     * 获取水闸类型名称
+     *
+     * @param sluiceType
+     */
+    @Override
+    public String getSluiceTypeName(Integer sluiceType) {
+        return SluiceType.valueOf(sluiceType);
+    }
+
+    /**
+     * 获取闸类型名称
+     *
+     * @param strobeType
+     */
+    @Override
+    public String getStrobeTypeName(Integer strobeType) {
+        return StrobeType.valueOf(strobeType);
     }
 
 

@@ -1,5 +1,7 @@
 package com.stylefeng.guns.core.shiro;
 
+import com.stylefeng.guns.core.node.ZTreeNode;
+
 import java.io.Serializable;
 import java.util.List;
 
@@ -20,7 +22,15 @@ public class ShiroUser implements Serializable {
     public List<Integer> roleList; // 角色集
     public String deptName;        // 部门名称
     public List<String> roleNames; // 角色名称集
+    public List<ZTreeNode> tree; // 获取部分树
 
+    public List<ZTreeNode> getTree() {
+        return tree;
+    }
+
+    public void setTree(List<ZTreeNode> tree) {
+        this.tree = tree;
+    }
 
     public Integer getId() {
         return id;

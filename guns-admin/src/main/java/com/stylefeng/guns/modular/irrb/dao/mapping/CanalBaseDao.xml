@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.stylefeng.guns.modular.irrb.dao.CanalBaseDao">
+
+	<!-- 可根据自己的需求，是否要使用 -->
+    <resultMap type="map" id="BaseResultMap">
+        <result property="canalId" column="canal_id"/>
+        <result property="canalCode" column="canal_code"/>
+        <result property="irrId" column="irr_id"/>
+        <result property="canalName" column="canal_name"/>
+        <result property="canalType" column="canal_type"/>
+        <result property="canalLength" column="canal_length"/>
+        <result property="canalControlArea" column="canal_control_area"/>
+        <result property="canalPlanArea" column="canal_plan_area"/>
+        <result property="upperCanalId" column="upper_canal_id"/>
+        <result property="upperCanalIds" column="upper_canal_ids"/>
+        <result property="upperCanalStake" column="upper_canal_stake"/>
+        <result property="created" column="created"/>
+        <result property="modified" column="modified"/>
+    </resultMap>
+
+    <select id="tree" resultType="com.stylefeng.guns.core.node.ZTreeNode">
+        select canal_id as id,upper_canal_id as pId,canal_name as name,canal_type as attr,
+        (
+        CASE
+        WHEN (upper_canal_id = 0 OR upper_canal_id IS NULL) THEN
+        'true'
+        ELSE
+        'false'
+        END
+        ) as isOpen from canal_base
+
+    </select>
+
+    <select id="list" resultMap="BaseResultMap">
+        select * from canal_base where 1=1
+        <if test="condition != null and condition != ''">
+            and canal_code like CONCAT('%',#{condition},'%') or canal_name like CONCAT('%',#{condition},'%')
+        </if>
+
+        <if test="canalType != null and canalType !=''">
+            and canal_type = #{canalType}
+        </if>
+
+        <if test="irrId != null and irrId !=''">
+            and irr_id = #{irrId}
+        </if>
+
+    </select>
+
+</mapper>

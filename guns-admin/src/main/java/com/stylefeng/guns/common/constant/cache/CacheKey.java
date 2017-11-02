@@ -19,5 +19,12 @@ public interface CacheKey {
 
     String DEPT_NAME = "dept_name_";
 
+    //水源名称
+    String SOURCE_NAME = "source_name_";
+    //灌区名称
+    String IRR_NAME = "irr_name_";
+    //渠道名称
+    String CANAL_NAME = "canal_name_";
+
 
 }

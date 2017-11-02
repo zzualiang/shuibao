@@ -1,0 +1,55 @@
+@layout("/common/_container.html"){
+<div class="row">
+    <div class="col-sm-12">
+        <div class="ibox float-e-margins">
+            <div class="ibox-title">
+                <h5>水源信息管理</h5>
+            </div>
+            <div class="ibox-content">
+                <div class="row row-lg">
+                    <div class="col-sm-12">
+                        <div class="row">
+                            <div class="col-sm-3">
+                                <#NameCon id="condition" name="快速查询"  placeholder="水源编码/水源名称" />
+                            </div>
+                            <div class="col-sm-2">
+                                <#SelectCon id="sourceTypeB" name="水源工程类型" >
+                                    <option value="0">全部</option>
+                                    <option value="1">水库</option>
+                                    <option value="2">河流</option>
+                                    <option value="3">井</option>
+                                    <option value="9">其他</option>
+                                </#SelectCon>
+                            </div>
+                            <div class="col-sm-2">
+                                <#SelectCon id="sourceTypeS" name="水源类型" >
+                                    <option value="0">全部</option>
+                                    <option value="1">地表水</option>
+                                    <option value="2">地下水</option>
+                                    <option value="9">其他</option>
+                                </#SelectCon>
+                            </div>
+                            <div class="col-sm-2">
+                                <#button name="搜索" icon="fa-search" clickFun="SourceBase.search()"/>
+                            </div>
+                        </div>
+                        <div class="hidden-xs" id="SourceBaseTableToolbar" role="group">
+                            @if(shiro.hasPermission("/sourceBase/add")){
+                            <#button name="添加" icon="fa-plus" clickFun="SourceBase.openAddSourceBase()"/>
+                            @}
+                            @if(shiro.hasPermission("/sourceBase/update")){
+                            <#button name="修改" icon="fa-edit" clickFun="SourceBase.openSourceBaseDetail()" space="true"/>
+                            @}
+                            @if(shiro.hasPermission("/sourceBase/delete")){
+                            <#button name="删除" icon="fa-remove" clickFun="SourceBase.delete()" space="true"/>
+                            @}
+                        </div>
+                        <#table id="SourceBaseTable"/>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script src="${ctxPath}/static/modular/irrb/sourceBase/sourceBase.js"></script>
+@}

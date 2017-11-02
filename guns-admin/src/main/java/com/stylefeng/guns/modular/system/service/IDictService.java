@@ -1,5 +1,7 @@
 package com.stylefeng.guns.modular.system.service;
 
+import com.stylefeng.guns.common.persistence.model.Dict;
+
 /**
  * 字典服务
  *
@@ -31,5 +33,7 @@ public interface IDictService {
      * @Date 2017/4/28 11:39
      */
     void delteDict(Integer dictId);
+
+    Dict findDictById(Integer dictId);
 
 }

@@ -16,13 +16,23 @@ public class TemplateGenerator {
 
     public static void main(String[] args) throws IOException {
         ContextConfig contextConfig = new ContextConfig();
-        contextConfig.setBizChName("啊哈");
-        contextConfig.setBizEnName("haha");
-        contextConfig.setModuleName("tk");
-        contextConfig.setProjectPath("D:\\tmp\\guns");
+        contextConfig.setBizChName("灌区基本信息");
+        contextConfig.setBizEnName("irrbsbase");
+        contextConfig.setModuleName("irrb");
+        contextConfig.setSqlName("irrb_s");
+        contextConfig.setProjectPath("G:\\IdeaProjects\\guns\\guns-admin");
 
-        //contextConfig.setAddPageSwitch(false);
-        //contextConfig.setEditPageSwitch(false);
+        contextConfig.setAddPageSwitch(true);
+        contextConfig.setEditPageSwitch(true);
+        contextConfig.setControllerSwitch(true);
+        contextConfig.setDaoSwitch(true);
+        contextConfig.setIndexPageSwitch(true);
+        contextConfig.setInfoJsSwitch(true);
+        contextConfig.setJsSwitch(true);
+        contextConfig.setDaoSwitch(true);
+        contextConfig.setServiceSwitch(true);
+        contextConfig.setSqlSwitch(true);
+
 
         GunsTemplateEngine gunsTemplateEngine = new SimpleTemplateEngine();
         gunsTemplateEngine.setContextConfig(contextConfig);

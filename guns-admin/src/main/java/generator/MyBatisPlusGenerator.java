@@ -28,13 +28,13 @@ public class MyBatisPlusGenerator {
 
         // 全局配置
         GlobalConfig gc = new GlobalConfig();
-        gc.setOutputDir("D:\\ideaSpace\\guns\\src\\main\\java");//这里写你自己的java目录
+        gc.setOutputDir("G:\\IdeaProjects\\guns\\guns-admin\\src\\main\\java");//这里写你自己的java目录
         gc.setFileOverride(true);//是否覆盖
         gc.setActiveRecord(true);
         gc.setEnableCache(false);// XML 二级缓存
         gc.setBaseResultMap(true);// XML ResultMap
         gc.setBaseColumnList(false);// XML columList
-        gc.setAuthor("stylefeng");
+        gc.setAuthor("hnsl");
         mpg.setGlobalConfig(gc);
 
         // 数据源配置
@@ -49,7 +49,7 @@ public class MyBatisPlusGenerator {
         });
         dsc.setDriverName("com.mysql.jdbc.Driver");
         dsc.setUsername("root");
-        dsc.setPassword("root");
+        dsc.setPassword("hnsl6915");
         dsc.setUrl("jdbc:mysql://127.0.0.1:3306/guns?characterEncoding=utf8");
         mpg.setDataSource(dsc);
 
@@ -57,6 +57,7 @@ public class MyBatisPlusGenerator {
         StrategyConfig strategy = new StrategyConfig();
         //strategy.setTablePrefix(new String[]{"_"});// 此处可以修改为您的表前缀
         strategy.setNaming(NamingStrategy.underline_to_camel);// 表名生成策略
+        strategy.setInclude(new String[]{"sluice_base"});
         mpg.setStrategy(strategy);
 
         // 包配置
