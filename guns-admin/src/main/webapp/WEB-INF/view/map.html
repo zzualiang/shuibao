@@ -1,0 +1,415 @@
+@layout("/common/_container.html"){
+<link rel="stylesheet" href="${ctxPath}/static/css/plugins/leaflet/Control.MiniMap.min.css">
+<link rel="stylesheet" href="${ctxPath}/static/css/plugins/leaflet/Control.FullScreen.css">
+<link rel="stylesheet" href="${ctxPath}/static/css/plugins/leaflet/Leaflet.PolylineMeasure.css">
+<link rel="stylesheet" href="${ctxPath}/static/css/plugins/leaflet/L.Control.MousePosition.css">
+<link rel="stylesheet" href="${ctxPath}/static/css/plugins/leaflet/leaflet-history.css">
+<link rel="stylesheet" href="${ctxPath}/static/css/plugins/leaflet/leaflet-measure.css">
+<link rel="stylesheet" href="${ctxPath}/static/css/plugins/leaflet/leaflet.draw.css"/>
+
+<div class="container-fluid" style="padding: 0 !important;height: calc(100% + 30px);margin: -15px;" id="container"
+     v-cloak>
+    <div id="map" style="height: 100%;"></div>
+    <div class="tool-bar mapWidget">
+        <ul>
+            <li>
+                <span v-on:click="toolClick('basemap')" style="display: block">
+                    <i class="iconfont icon-ditu"></i>底图选择</span>
+                <div class="tool-panel basemap" v-show="toolShow=='basemap'">
+                    <div class="bar-arrow measure-bar-arrow"></div>
+                    <div class="panel-content map-list">
+                        <div class="blockdiv" style="height: 138px">
+                            <div id="zhitudiv">
+                                <span class="basemap-group-title">平台地图</span>
+                                <a class="mapa"
+                                   :class="[item.layerId, {'mapactive': baseMapGroup.mapNow == item.layerId}]"
+                                   title="item.name" v-for="item in baseMapGroup.list"
+                                   v-on:click="basemapSelect(item)" href="javascript:void(0);">
+                                    <span class="maptitle" :class="{'active':baseMapGroup.mapNow == item.layerId}">{{item.name}}</span>
+                                </a>
+                            </div>
+                        </div>
+                        <div class="blockdiv">
+                            <div id="thirddiv">
+                                <span class="basemap-group-title">第三方地图</span>
+                                <a class="mapa tianditu" dataid="17" title="天地图">
+                                    <span class="maptitle">天地图</span>
+                                </a>
+                                <a class="mapa tengxun" dataid="8" title="腾讯地图">
+                                    <span class="maptitle">腾讯地图</span>
+                                </a>
+                                <a class="mapa tengxunimg" dataid="12" title="腾讯影像图">
+                                    <span class="maptitle">腾讯影像图</span>
+                                </a>
+                                <a class="mapa gaode" dataid="7" title="高德地图">
+                                    <span class="maptitle">高德地图</span>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+
+
+                </div>
+            </li>
+            <li class="maptool-bar">
+                <span v-on:click="toolClick('maptool')" style="display: block"> <i class="iconfont icon-liangce"></i>基本工具</span>
+                <div class="tool-panel maptool" v-show="toolShow=='maptool'">
+                    <div class="bar-arrow maptool-bar-arrow"></div>
+                    <div class="panel-content maptool-bar-content">
+                        <a class="maptool-bar-marker" name="marker" v-on:click="previousview" title="上一视图"></a>
+                        <a class="maptool-bar-polyline" name="polyline" v-on:click="nextview" title="下一视图"></a>
+
+                    </div>
+                </div>
+            </li>
+            <li class="measure-bar">
+                <span v-on:click="toolClick('measure')" style="display: block"> <i class="iconfont icon-liangce"></i>量测工具</span>
+                <div class="tool-panel measure" v-show="toolShow=='measure'">
+                    <div class="bar-arrow measure-bar-arrow"></div>
+                    <div class="panel-content measure-bar-content">
+                        <a class="measure-bar-marker" name="marker" v-on:click="measurepos" title="测量点"></a>
+                        <a class="measure-bar-polyline" name="polyline" v-on:click="measurelength" title="测量线段"></a>
+                        <a class="measure-bar-polygon" name="polygon" v-on:click="measurearea" title="测量多边形"></a>
+                    </div>
+                </div>
+            </li>
+
+            <li class="draw-bar">
+                <span v-on:click="toolClick('draw')" style="display: block"><i
+                        class="iconfont icon-biaohui"></i>地图标绘</span>
+                <!--<div class="tool-panel draw" v-show="toolShow=='draw'">-->
+                    <!--<div class="bar-arrow measure-bar-arrow"></div>-->
+                    <!--<div class="panel-content draw-bar-content" id="maptool_draw">-->
+                        <!--&lt;!&ndash;<a class="draw-bar-marker" name="marker" href="#" title="标绘点"></a>&ndash;&gt;-->
+                        <!--&lt;!&ndash;<a class="draw-bar-polyline" name="polyline" v-on:click="drawline" href="#" title="标绘线段"></a>&ndash;&gt;-->
+                        <!--&lt;!&ndash;<a class="draw-bar-polygon" name="polygon" href="#" title="标绘多边形"></a>&ndash;&gt;-->
+                        <!--&lt;!&ndash;<a class="draw-bar-rectangle" name="rectangle" href="#" title="标绘矩形"></a>&ndash;&gt;-->
+                        <!--&lt;!&ndash;<a class="draw-bar-circle" name="circle" href="#" title="标绘圆"></a>&ndash;&gt;-->
+                        <!--&lt;!&ndash;<a class="draw-bar-txt" name="textMarker" href="#" title="标绘文本"></a>&ndash;&gt;-->
+                    <!--</div>-->
+                <!--</div>-->
+            </li>
+        </ul>
+    </div>
+    <div class="search mapWidget">
+        <div class="input-group">
+            <input type="text" class="form-control" placeholder="请输入关键字">
+            <span class="input-group-btn">
+				<button type="button" class="btn btn-primary" v-on:click="submitSearch">搜索</button>
+			</span>
+        </div>
+        <div class="search-result" v-show="resultShow">
+            <div class="ibox float-e-margins">
+                <div class="ibox-title">
+                    <h5>结果展示</h5>
+                    <div class="ibox-tools">
+                        <a v-on:click="closeResult">
+                            <i class="fa fa-times"></i>
+                        </a>
+                    </div>
+                </div>
+                <div class="ibox-content icons-box" style="padding: 5px;">
+                    <ul class="search-result-group">
+                        <li class="active">全部（20）</li>
+                        <li>渠道（5）</li>
+                        <li>水闸（5）</li>
+                        <li>桥（5）</li>
+                        <li>其他（5）</li>
+                    </ul>
+                    <div class="search-result-list"></div>
+
+                </div>
+            </div>
+
+        </div>
+    </div>
+    <div class="layerGroup mapWidget ">
+
+        <ul class="layerGroup-content ">
+            <li class="layerItem" v-on:click="layerGroupTab('base',$event)">监测站点</li>
+            <li class="layerItem" v-on:click="layerGroupTab('build',$event)">水保项目</li>
+        </ul>
+        <div class="layerGroup-panel fast animated" :class="{'slideInLeft':isExtend,'slideOutLeft':!isExtend}">
+            <div class="layerGroup-tab"></div>
+            <div class="layerGroup-list">
+                <div class="ibox float-e-margins">
+                    <div class="ibox-content icons-box" style="padding: 5px;">
+                        <div class="bs-glyphicons">
+                            <ul class="bs-glyphicons-list">
+                                <li v-for="item in layerList" :class="{'active':item.isShow}"
+                                    v-on:click="layerClickHandler(item)">
+                                    <i class="iconfont" :class="item.icon"></i>
+                                    <span class="glyphicon-class">{{item.name}}</span>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+    <!-- 自定义js -->
+    <script src="${ctxPath}/static/js/common/mapConfig.js"></script>
+    <script src="${ctxPath}/static/js/content.js?v=1.0.0"></script>
+    <!-- jQuery UI -->
+    <script src="${ctxPath}/static/js/plugins/jquery-ui/jquery-ui.min.js"></script>
+
+    <!--leaflet组件-->
+    <script src="${ctxPath}/static/js/plugins/leaflet/Control.MiniMap.min.js"></script>
+    <script src="${ctxPath}/static/js/plugins/leaflet/Control.FullScreen.js"></script>
+    <script src="${ctxPath}/static/js/plugins/leaflet/L.Control.MousePosition.js"></script>
+    <script src="${ctxPath}/static/js/plugins/leaflet/Leaflet.PolylineMeasure.js"></script>
+    <script src="${ctxPath}/static/js/plugins/leaflet/leaflet-history.js"></script>
+    <script src="${ctxPath}/static/js/plugins/leaflet/leaflet-measure.js"></script>
+    <script src="${ctxPath}/static/js/plugins/leaflet/Leaflet.draw.js"></script>
+    <script src="${ctxPath}/static/js/plugins/leaflet/Leaflet.Draw.Event.js"></script>
+    <script src="${ctxPath}/static/js/plugins/leaflet/Toolbar.js"></script>
+    <script src="${ctxPath}/static/js/plugins/leaflet/Tooltip.js"></script>
+
+    <script src="${ctxPath}/static/js/plugins/leaflet/ext/GeometryUtil.js"></script>
+    <script src="${ctxPath}/static/js/plugins/leaflet/ext/LatLngUtil.js"></script>
+    <script src="${ctxPath}/static/js/plugins/leaflet/ext/LineUtil.Intersect.js"></script>
+    <script src="${ctxPath}/static/js/plugins/leaflet/ext/Polygon.Intersect.js"></script>
+    <script src="${ctxPath}/static/js/plugins/leaflet/ext/Polyline.Intersect.js"></script>
+    <script src="${ctxPath}/static/js/plugins/leaflet/ext/TouchEvents.js"></script>
+
+    <script src="${ctxPath}/static/js/plugins/leaflet/draw/DrawToolbar.js"></script>
+    <script src="${ctxPath}/static/js/plugins/leaflet/draw/Draw.Feature.js"></script>
+    <script src="${ctxPath}/static/js/plugins/leaflet/draw/Draw.SimpleShape.js"></script>
+    <script src="${ctxPath}/static/js/plugins/leaflet/draw/Draw.Polyline.js"></script>
+    <script src="${ctxPath}/static/js/plugins/leaflet/draw/Draw.Marker.js"></script>
+    <script src="${ctxPath}/static/js/plugins/leaflet/draw/Draw.Circle.js"></script>
+    <script src="${ctxPath}/static/js/plugins/leaflet/draw/Draw.CircleMarker.js"></script>
+    <script src="${ctxPath}/static/js/plugins/leaflet/draw/Draw.Polygon.js"></script>
+    <script src="${ctxPath}/static/js/plugins/leaflet/draw/Draw.Rectangle.js"></script>
+
+
+    <script src="${ctxPath}/static/js/plugins/leaflet/edit/EditToolbar.js"></script>
+    <script src="${ctxPath}/static/js/plugins/leaflet/edit/EditToolbar.Edit.js"></script>
+    <script src="${ctxPath}/static/js/plugins/leaflet/edit/EditToolbar.Delete.js"></script>
+
+    <script src="${ctxPath}/static/js/plugins/leaflet/Control.Draw.js"></script>
+
+    <script src="${ctxPath}/static/js/plugins/leaflet/edit/Edit.Poly.js"></script>
+    <script src="${ctxPath}/static/js/plugins/leaflet/edit/Edit.SimpleShape.js"></script>
+    <script src="${ctxPath}/static/js/plugins/leaflet/edit/Edit.Rectangle.js"></script>
+    <script src="${ctxPath}/static/js/plugins/leaflet/edit/Edit.Marker.js"></script>
+    <script src="${ctxPath}/static/js/plugins/leaflet/edit/Edit.CircleMarker.js"></script>
+    <script src="${ctxPath}/static/js/plugins/leaflet/edit/Edit.Circle.js"></script>
+    <script>
+        new Vue({
+            el: '#container',
+            data: {
+                isExtend: false,
+                resultShow: false,
+                toolShow: null,
+                baseMapGroup: {mapNow: 'color', list: mapConfig.Layers.baseMapLayers},
+                layerList: [],
+                map: null,
+                baseMap: null
+            },
+            methods: {
+                //左侧图层组切换
+                layerGroupTab: function (type, e) {
+                    var _this = this;
+                    if ($(e.currentTarget).hasClass('active')) {
+                        $(e.currentTarget).removeClass('active');
+                        _this.isExtend = false;
+                    } else {
+                        $(".layerGroup-content li").removeClass('active');
+                        $(e.currentTarget).addClass('active');
+                        _this.isExtend = true;
+                    }
+                    this.layerList = mapConfig.Layers[type];
+
+                },
+                layerClickHandler: function (item) {
+                    item.isShow = !item.isShow;
+                    var url = item.url;
+                    if(item.layer!=null)
+                    {
+                        item.layer.remove();
+                        item.layer=null;
+                    }
+                    else
+                    {
+                        var layeritem= L.esri.featureLayer({
+                            url: url,
+                            pointToLayer: function (geojson, latlng) {
+                                return L.circleMarker(latlng, {
+
+                                    color: item.style.color
+                                });
+                            }
+                        }).bindPopup(function (layer) {
+                            return L.Util.template(item.template, layer.feature.properties);
+                        }).addTo(this.map);
+                        item.layer = layeritem;
+                    }
+
+                },
+                submitSearch: function () {
+                    this.resultShow = true;
+                },
+                closeResult: function () {
+                    this.resultShow = false;
+                },
+                toolClick: function (toolType) {
+                    if (this.toolShow == toolType) {
+                        closemeasuretool(toolType);
+                        this.toolShow = null;
+                        if(toolType=='draw')
+                        {
+                            drawControl.remove();
+                        }
+                    } else {
+                        this.toolShow = toolType;
+                        if(toolType=="draw")
+                        {
+                            drawControl.addTo(this.map);
+                        }
+                    }
+                },
+                basemapSelect: function (item) {
+                    this.baseMapGroup.mapNow = item.layerId;
+                    this.map.removeLayer(this.baseMap);
+                    this.baseMap = L.esri.tiledMapLayer({
+                        url: item.url
+                    }).addTo(this.map);
+                },
+                measurelength:function(e)
+                {
+                    var _this = this;
+                    e.stopPropagation();
+                    if(measurecontrol==null)
+                    {
+                        measurecontrol = new L.control.polylineMeasure({position:'topleft', unit:'m', clearMeasurementsOnStop: false, showMeasurementsClearControl: false, showUnitControl: false}).addTo(this.map);
+                    }
+                    measurecontrol._toggleMeasure();
+                },
+                measurearea:function(e)
+                {
+                    e.stopPropagation();
+                    if(measurearea==null)
+                    {
+                        measurearea =   new L.control.measure().addTo(this.map);
+                    }
+                    measurearea._startMeasure();
+                },
+                measurepos:function(e)
+                {
+                    e.stopPropagation();
+                    if(measurepos==null)
+                    {
+                        measurepos = new L.control.mousePosition().addTo(this.map);
+                    }
+                    measurepos._startMeasure();
+
+                },
+                previousview:function(e) {
+                    e.stopPropagation();
+                    forwardNextView.goBack();
+                },
+                nextview:function(e)
+                {
+                    e.stopPropagation();
+                    forwardNextView.goForward();
+                }
+            },
+            mounted: function () {
+                var _this = this;
+                this.map = L.map("map", {
+                    zoomControl: false,
+                    attributionControl: false
+                }).setView([33, 113], 10);
+
+                var osmUrl = 'http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png';
+                var osm2 = new L.TileLayer(osmUrl, {minZoom: 0, maxZoom: 13, attribution: null});
+
+                this.baseMap = L.esri.tiledMapLayer({
+                    url: "http://map.geoq.cn/arcgis/rest/services/ChinaOnlineCommunity/MapServer"
+                }).addTo(this.map);
+
+                //地图控件位置
+//                L.control.zoom({
+//                    position: "bottomright"
+//                }).addTo(this.map);
+
+                var miniMap = new L.Control.MiniMap(osm2, {
+                    toggleDisplay: true,
+                    position: 'bottomright'
+                }).addTo(this.map);
+
+                this.map.on('click', function () {
+                    if (_this.toolShow == 'basemap') _this.toolShow = null;
+                });
+                //距离量算
+                measurecontrol = new L.control.polylineMeasure({position:'topleft', unit:'m', clearMeasurementsOnStop: false, showMeasurementsClearControl: false, showUnitControl: false}).addTo(this.map);
+                //面积量算
+                measurearea = new L.control.measure().addTo(this.map);
+                //位置量算
+                measurepos = new L.control.mousePosition().addTo(this.map);
+                //视图控制
+                forwardNextView = new L.HistoryControl({}).addTo(this.map);
+                //全图
+                //fullscreen = new L.control.fullscreen().addTo(this.map);
+                //绘图，编辑
+                drawnItems = new L.featureGroup().addTo(this.map);
+                drawControl =  new L.Control.Draw({
+                    edit: {
+                        featureGroup: drawnItems,
+                        poly: {
+                            allowIntersection: false
+                        }
+                    },
+                    draw: {
+                        polygon: {
+                            allowIntersection: false,
+                            showArea: true
+                        }
+                    }
+                });
+                this.map.on(L.Draw.Event.CREATED, function (event) {
+                    var layer = event.layer;
+
+                    drawnItems.addLayer(layer);
+                });
+            }
+        })
+        function closemeasuretool(type)
+        {
+            switch(type){
+                case "measure":
+                    if(measurecontrol._measuring)
+                    {
+                        measurecontrol._clearAllMeasurements();
+                        measurecontrol._toggleMeasure();
+                        measurecontrol = null;
+                    }
+                    if(measurearea!=null)
+                    {
+                        measurearea.remove();
+                        measurearea = null;
+                    }
+                    if(measurepos!=null)
+                    {
+                        measurepos.remove();
+                        measurepos = null;
+                    }
+
+                    break;
+                default:
+                    break;
+            }
+        }
+        function addlayer(url)
+        {
+            var busStops = L.esri.featureLayer({
+                url: url
+            }).addTo(map);
+        }
+    </script>
+</div>
+@}
