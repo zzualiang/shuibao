@@ -60,7 +60,7 @@ var mapConfig = {
                 icon: 'icon-guanqu',
                 style:{color:"red "},
                 layer: null,
-                template: "<table style='border:1px solid #b3b3b3'><tr><td>{id}</td></tr></table>",
+                template: "<table style='border:1px solid #b3b3b3'><tr><td>编号:</td></t><td>{id}</td></tr></table>",
                 pointToLayer:  function (latlng) {
                     var myIcon = L.icon({iconUrl: "/static/img/map/stationlook.png",
                         iconSize: [30, 30],
