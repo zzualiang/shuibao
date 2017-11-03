@@ -238,10 +238,7 @@
                         var layeritem= L.esri.featureLayer({
                             url: url,
                             pointToLayer: function (geojson, latlng) {
-                                return L.circleMarker(latlng, {
-
-                                    color: item.style.color
-                                });
+                                return item.pointToLayer(latlng);
                             }
                         }).bindPopup(function (layer) {
                             return L.Util.template(item.template, layer.feature.properties);
@@ -329,7 +326,7 @@
                 var osm2 = new L.TileLayer(osmUrl, {minZoom: 0, maxZoom: 13, attribution: null});
 
                 this.baseMap = L.esri.tiledMapLayer({
-                    url: "http://map.geoq.cn/arcgis/rest/services/ChinaOnlineCommunity/MapServer"
+                    url: "http://10.41.30.227:6080/arcgis/rest/services/shuibao/sbimage/MapServer"
                 }).addTo(this.map);
 
                 //地图控件位置
@@ -337,7 +334,7 @@
 //                    position: "bottomright"
 //                }).addTo(this.map);
 
-                var miniMap = new L.Control.MiniMap(osm2, {
+                var miniMap = new L.Control.MiniMap(baseMap, {
                     toggleDisplay: true,
                     position: 'bottomright'
                 }).addTo(this.map);

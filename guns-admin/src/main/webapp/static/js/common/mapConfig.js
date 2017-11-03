@@ -42,18 +42,32 @@ var mapConfig = {
                 name: '分站监测管理单位',
                 url: 'http://10.41.30.227:6080/arcgis/rest/services/shuibao/sixstations/Featureserver/0',
                 icon: 'icon-shuiyuan',
-                template: "<table><tr>{id}</tr></table>",
+                template: "<table style='border:1px solid #b3b3b3'><tr><td>{id}</td></tr></table>",
                 style:{color:"blue"},
-                layer: null
+                layer: null,
+                pointToLayer:  function (latlng) {
+                    var myIcon = L.icon({iconUrl: "/static/img/map/station.png",
+                        iconSize: [30, 30],
+                        popupAnchor: [0, 0]
+                    });
+                    return L.marker(latlng,{icon:myIcon});
+                }
             },
             {
                 isShow: false,
                 name: '水保站',
                 url: 'http://10.41.30.227:6080/arcgis/rest/services/shuibao/stations/Featureserver/0',
                 icon: 'icon-guanqu',
-                template: null,
-                style:{color:"green "},
-                layer: null
+                style:{color:"red "},
+                layer: null,
+                template: "<table style='border:1px solid #b3b3b3'><tr><td>{id}</td></tr></table>",
+                pointToLayer:  function (latlng) {
+                    var myIcon = L.icon({iconUrl: "/static/img/map/stationlook.png",
+                        iconSize: [30, 30],
+                        popupAnchor: [0, 0]
+                    });
+                    return L.marker(latlng,{icon:myIcon});
+                }
             }],
         'build': [
             {
